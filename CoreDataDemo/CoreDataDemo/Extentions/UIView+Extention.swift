@@ -37,3 +37,23 @@ extension UIView {
 class MyTapGestureRecognizer: UITapGestureRecognizer {
     var action : (()->Void)? = nil
 }
+// Helper to format date as per the day (ignoring time)
+extension Date {
+    func toDateString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd" // Use date format to group by day
+        return formatter.string(from: self)
+    }
+}
+
+extension String{
+    func toDate() -> Date {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        formatter.timeZone = TimeZone(abbreviation: "UTC") // Important for 'Z'
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        return formatter.date(from: self) ?? Date()
+    }
+}
